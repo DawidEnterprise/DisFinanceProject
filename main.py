@@ -88,7 +88,7 @@ if df is not None and not df.empty:
     model.compile(optimizer=optimizer, loss='mean_squared_error')
 
     # Train the model with more epochs
-    model.fit(X, y, epochs=20, batch_size=32)
+    model.fit(X, y, epochs=35, batch_size=32)
 
     # Make predictions for the future
     future_time_steps = 10  # Predicting the next 5 days
@@ -139,8 +139,9 @@ if df is not None and not df.empty:
     ax0.legend()
     ax0.grid(True)
 
-    # Show up and down arrows for pivot points
-    for index, row in df.iterrows():
+    # Show up and down arrows for pivot points less frequently
+    pivot_annotation_frequency = 4  # Annotate every 10th data point with pivot point
+    for index, row in df.iloc[::pivot_annotation_frequency].iterrows():
         if row['Pivot_Direction'] == 'Up':
             ax0.annotate('^', xy=(index, row['Pivot_Point']), textcoords='offset points', xytext=(0, 10), ha='center')
         else:
